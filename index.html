@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>安软配置下发测试工具</title>
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="layui/css/layui.css" media="all" />
+</head>
+
+<body>
+  <div class="layui-container">
+    <!-- 选项卡标题 -->
+    <div class="layui-tab layui-tab-card">
+      <ul class="layui-tab-title">
+        <li class="layui-this">测试工具设置</li>
+        <li>编码设置</li>
+        <li>OSD设置</li>
+        <li>28181设置</li>
+        <li>1400设置</li>
+      </ul>
+
+      <!-- 选项卡内容 -->
+      <div class="layui-tab-content" style="height: auto">
+        <!-- 第一个选项卡内容 -->
+        <div class="layui-tab-item layui-show">
+          <!-- 本地http服务配置的form -->
+          <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+              <label class="layui-form-label">http端口</label>
+              <div class="layui-input-inline">
+                <div class="layui-input-inline">
+                  <input type="text" name="sip-server-port" lay-verify="required|number|port" lay-verType="tips"
+                    lay-reqText="端口不能为空!" autocomplete="off" class="layui-input" value="56789">
+                </div>
+              </div>
+              <button type="submit" class="layui-btn" lay-submit="" lay-filter="start-server">启动服务</button>
+            </div>
+          </form>
+          <button type="button" class="layui-btn">打开开发者工具</button>
+        </div>
+
+        <!-- 第二个选项卡内容 -->
+        <div class="layui-tab-item">
+          <!-- 第二个选项卡的form -->
+          <form class="layui-form" action="">
+            <!-- 定义行，开始使用栅格布局 -->
+            <div class="layui-row">
+              <!-- 栅格6/12，用于主码流设置 -->
+              <div class="layui-col-md6">
+                <fieldset class="layui-elem-field">
+                  <legend>主码流</legend>
+                  <div class="layui-field-box">
+                    <!-- 编码模式 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">编码模式</label>
+                      <div class="layui-input-inline">
+                        <select name="main-encode-mode">
+                          <option value="1">H.264</option>
+                          <option value="2">H.265</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 编码复杂度 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">编码复杂度</label>
+                      <div class="layui-input-inline">
+                        <select name="main-profile">
+                          <option value="1">Baseline</option>
+                          <option value="2">Main Profile</option>
+                          <option value="3">High Profile</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 分辨率 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">分辨率</label>
+                      <div class="layui-input-inline">
+                        <select name="main-resolution" lay-filter="main-resolution">
+                          <option>5M(2592*1944)</option>
+                          <option>2K(2560*1440)</option>
+                          <option selected="selected">1080P(1920*1080)</option>
+                          <option>720P(1280*720)</option>
+                        </select>
+                      </div>
+                      <div class="layui-form-mid layui-word-aux" id="main-resolution"></div>
+                    </div>
+                    <!-- 帧率 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">帧率</label>
+                      <div class="layui-input-inline">
+                        <input type="number" name="main-fps" lay-verify="required|fps" lay-verType="tips"
+                          lay-reqText="帧率不能为空!" autocomplete="off" class="layui-input" value="25">
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">fps</div>
+                    </div>
+                    <!-- 码率类型 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">码率类型</label>
+                      <div class="layui-input-inline">
+                        <select name="main-bitrate-type">
+                          <option value="1">可变码率</option>
+                          <option value="2">固定码率</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 图像质量 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">图像质量</label>
+                      <div class="layui-input-inline">
+                        <select name="main-quality">
+                          <option value="1">很差</option>
+                          <option value="2">较差</option>
+                          <option value="3" selected="selected">一般</option>
+                          <option value="4">好</option>
+                          <option value="5">较好</option>
+                          <option value="6">最好</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 码率 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">码率</label>
+                      <div class="layui-input-inline">
+                        <select name="main-bitrate">
+                          <option>256</option>
+                          <option>512</option>
+                          <option selected="selected">1024</option>
+                          <option>2048</option>
+                          <option>3072</option>
+                          <option>4096</option>
+                          <option>6144</option>
+                          <option>8192</option>
+                          <option>12288</option>
+                          <option>16384</option>
+                        </select>
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">kbps</div>
+                    </div>
+                    <!-- I帧间隔 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">I帧间隔</label>
+                      <div class="layui-input-inline">
+                        <input type="number" name="main-frame-interval" lay-verify="required|interval"
+                          lay-verType="tips" lay-reqText="不能为空！" autocomplete="off" class="layui-input" value="50">
+                      </div>
+                    </div>
+                    <!-- 音频 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">音频</label>
+                      <div class="layui-input-inline">
+                        <input type="checkbox" name="main-audio-switch" lay-text="开启|关闭" lay-skin="switch" />
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <!-- 栅格6/12，用于辅码流设置 -->
+              <div class="layui-col-md6">
+                <fieldset class="layui-elem-field">
+                  <legend>辅码流</legend>
+                  <div class="layui-field-box">
+                    <!-- 编码模式 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">编码模式</label>
+                      <div class="layui-input-inline">
+                        <select name="sub-encode-mode">
+                          <option value="1">H.264</option>
+                          <option value="2">H.265</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 编码复杂度 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">编码复杂度</label>
+                      <div class="layui-input-inline">
+                        <select name="sub-profile">
+                          <option value="1">Baseline</option>
+                          <option value="2">Main Profile</option>
+                          <option value="3">High Profile</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 分辨率 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">分辨率</label>
+                      <div class="layui-input-inline">
+                        <select name="sub-resolution">
+                          <option>720P(1280*720)</option>
+                          <option>D1(704*576)</option>
+                          <option>360P(640*360)</option>
+                          <option>CIF(352*288)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 帧率 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">帧率</label>
+                      <div class="layui-input-inline">
+                        <input type="number" name="sub-fps" lay-verify="required|fps" lay-verType="tips"
+                          lay-reqText="帧率不能为空!" autocomplete="off" class="layui-input" value="25">
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">fps</div>
+                    </div>
+                    <!-- 码率类型 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">码率类型</label>
+                      <div class="layui-input-inline">
+                        <select name="sub-bitrate-type">
+                          <option value="1">可变码率</option>
+                          <option value="2">固定码率</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 图像质量 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">图像质量</label>
+                      <div class="layui-input-inline">
+                        <select name="sub-quality">
+                          <option value="1">很差</option>
+                          <option value="2" selected="selected">较差</option>
+                          <option value="3">一般</option>
+                          <option value="4">好</option>
+                          <option value="5">较好</option>
+                          <option value="6">最好</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 码率 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">码率</label>
+                      <div class="layui-input-inline">
+                        <select name="sub-bitrate">
+                          <option>256</option>
+                          <option selected="selected">512</option>
+                          <option>1024</option>
+                          <option>2048</option>
+                          <option>3072</option>
+                          <option>4096</option>
+                          <option>6144</option>
+                          <option>8192</option>
+                          <option>12288</option>
+                          <option>16384</option>
+                        </select>
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">kbps</div>
+                    </div>
+                    <!-- I帧间隔 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">I帧间隔</label>
+                      <div class="layui-input-inline">
+                        <input type="number" name="sub-frame-interval" lay-verify="required|interval" lay-verType="tips"
+                          lay-reqText="I 帧间隔不能为空!" autocomplete="off" class="layui-input" value="50">
+                      </div>
+                    </div>
+                    <!-- 音频 -->
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">音频</label>
+                      <div class="layui-input-inline">
+                        <input type="checkbox" name="sub-audio-switch" lay-text="开启|关闭" lay-skin="switch" />
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="save-encode-config">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- 第三个选项卡内容 -->
+        <div class="layui-tab-item">
+          <!-- 第三个选项卡的form -->
+          <form class="layui-form" action="">
+            <!-- 通道标题 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">通道标题</label>
+              <div class="layui-input-inline">
+                <input type="text" name="channel-title" class="layui-input" value="Camera 01">
+              </div>
+            </div>
+            <!-- 自定义1 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">自定义1</label>
+              <div class="layui-input-inline">
+                <input type="text" name="custom1-title" class="layui-input" value="Custom1">
+              </div>
+            </div>
+            <!-- 自定义2 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">自定义2</label>
+              <div class="layui-input-inline">
+                <input type="text" name="custom2-title" class="layui-input" value="Custom2">
+              </div>
+            </div>
+            <!-- 自定义3 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">自定义3</label>
+              <div class="layui-input-inline">
+                <input type="text" name="custom3-title" class="layui-input" value="Custom3">
+              </div>
+            </div>
+            <!-- 自定义4 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">自定义4</label>
+              <div class="layui-input-inline">
+                <input type="text" name="custom4-title" class="layui-input" value="Custom4">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="save-osd-config">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- 第四个选项卡内容 -->
+        <div class="layui-tab-item">
+          <!-- 第四个选项卡的form -->
+          <form class="layui-form" action="">
+            <!-- 定义行，开始使用栅格布局 -->
+            <div class="layui-row">
+              <!-- 栅格4/12，用于SIP设备端设置 -->
+              <div class="layui-col-md4">
+                <!-- 启用28181或35114 -->
+                <div class="layui-form-item" pane="">
+                  <label class="layui-form-label">启用</label>
+                  <div class="layui-input-block">
+                    <input type="checkbox" name="enable[28181]" lay-skin="primary" title="28181">
+                    <input type="checkbox" name="enable[35114]" lay-skin="primary" title="35114">
+                  </div>
+                </div>
+                <!-- 设备名称 -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">设备名称</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="device-name" class="layui-input" value="IP Camera">
+                  </div>
+                </div>
+                <!-- 设备ID -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">设备ID</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-device-id" lay-verify="required|number|sipid" lay-verType="tips"
+                      lay-reqText="设备ID不能为空!" autocomplete="off" class="layui-input" value="34020000001180000001">
+                  </div>
+                </div>
+                <!-- 注册密码 -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">注册密码</label>
+                  <div class="layui-input-inline">
+                    <input type="password" name="sip-password" lay-verify="required" lay-verType="tips"
+                      lay-reqText="密码不能为空!" autocomplete="off" class="layui-input" value="12345678">
+                  </div>
+                </div>
+                <!-- 注册有效期 -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">注册有效期</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-valid-period" lay-verify="required|number|valid" lay-verType="tips"
+                      lay-reqText="注册有效期不能为空!" autocomplete="off" class="layui-input" value="3600">
+                  </div>
+                  <div class="layui-form-mid layui-word-aux">秒</div>
+                </div>
+                <!-- 心跳周期 -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">心跳周期</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-heart-cycle" lay-verify="required|number|heartbeat" lay-verType="tips"
+                      lay-reqText="心跳周期不能为空!" autocomplete="off" class="layui-input" value="60">
+                  </div>
+                  <div class="layui-form-mid layui-word-aux">秒</div>
+                </div>
+                <!-- 心跳超时次数 -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">超时次数</label>
+                  <div class="layui-input-inline">
+                    <input type="number" name="sip-timeout-count" lay-verify="required|timeout" lay-verType="tips"
+                      lay-reqText="超时次数不能为空!" autocomplete="off" class="layui-input" value="3">
+                  </div>
+                </div>
+                <!-- 码流索引 -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">码流索引</label>
+                  <div class="layui-input-inline">
+                    <select name="sip-stream-index">
+                      <option value="1">主码流</option>
+                      <option value="2">辅码流</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- 报警通道ID -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">报警通道ID</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-alarm-id" lay-verify="required|number|sipid" lay-verType="tips"
+                      lay-reqText="报警通道 ID 不能为空!" autocomplete="off" class="layui-input" value="34020000001340000001">
+                  </div>
+                </div>
+                <!-- 视频通道ID -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">视频通道ID</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-video-id" lay-verify="required|number|sipid" lay-verType="tips"
+                      lay-reqText="视频通道 ID 不能为空!" autocomplete="off" class="layui-input" value="34020000001320000001">
+                  </div>
+                </div>
+                <!-- 语音通道ID -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">语音通道ID</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-audio-id" lay-verify="required|number|sipid" lay-verType="tips"
+                      lay-reqText="语音通道 ID 不能为空!" autocomplete="off" class="layui-input" value="34020000001370000001">
+                  </div>
+                </div>
+              </div>
+              <!-- 栅格8/12，用于SIP服务端设置 -->
+              <div class="layui-col-md8">
+                <!-- 占位用 -->
+                <div class="layui-form-item layui-input-block"></div>
+                <!-- SIP服务器地址 -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">服务器地址</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-server-ip" lay-verify="required|ip" lay-verType="tips"
+                      lay-reqText="服务器地址不能为空!" autocomplete="off" class="layui-input" value="10.10.10.233">
+                  </div>
+                </div>
+                <!-- SIP服务器端口 -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">服务器端口</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-server-port" lay-verify="required|number|port" lay-verType="tips"
+                      lay-reqText="端口不能为空!" autocomplete="off" class="layui-input" value="5060">
+                  </div>
+                </div>
+                <!-- SIP服务器ID -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">服务器ID</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-server-id" lay-verify="required|number|sipid" lay-verType="tips"
+                      lay-reqText="服务器 ID 不能为空!" autocomplete="off" class="layui-input" value="34020000002000000001">
+                  </div>
+                </div>
+                <!-- SIP服务器域 -->
+                <div class="layui-form-item">
+                  <label class="layui-form-label">服务器域</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="sip-server-domain" lay-verify="required|number" lay-verType="tips"
+                      lay-reqText="服务器域不能为空!" autocomplete="off" class="layui-input" value="3402000000">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="save-28181-config">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- 第五个选项卡内容 -->
+        <div class="layui-tab-item">
+          <!-- 第五个选项卡的form -->
+          <form class="layui-form" action="">
+            <!-- 1400启用 -->
+            <div class="layui-form-item" pane="">
+              <label class="layui-form-label">启用</label>
+              <div class="layui-input-block">
+                <input type="checkbox" name="enable[1400]" lay-skin="primary">
+              </div>
+            </div>
+            <!-- 1400服务器地址 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">服务器地址</label>
+              <div class="layui-input-inline">
+                <input type="text" name="1400-server-ip" lay-verify="required|ip" lay-verType="tips" lay-reqText="不能为空！"
+                  autocomplete="off" class="layui-input" value="10.10.10.233">
+              </div>
+            </div>
+            <!-- 1400服务器端口 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">服务器端口</label>
+              <div class="layui-input-inline">
+                <input type="text" name="1400-server-port" lay-verify="required|number|port" lay-verType="tips"
+                  lay-reqText="端口不能为空!" autocomplete="off" class="layui-input" value="14000">
+              </div>
+            </div>
+            <!-- 设备ID -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">设备ID</label>
+              <div class="layui-input-inline">
+                <input type="text" name="1400-device-id" lay-verify="required|number|sipid" lay-verType="tips"
+                  lay-reqText="设备ID不能为空!" autocomplete="off" class="layui-input" value="34020000001190000001">
+              </div>
+            </div>
+            <!-- 1400用户名 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">用户名</label>
+              <div class="layui-input-inline">
+                <input type="text" name="username" lay-verify="required" lay-verType="tips" lay-reqText="不能为空！"
+                  autocomplete="off" class="layui-input" value="test">
+              </div>
+            </div>
+            <!-- 1400密码 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">密码</label>
+              <div class="layui-input-inline">
+                <input type="password" name="1400-password" lay-verify="required" lay-verType="tips"
+                  lay-reqText="密码不能为空!" autocomplete="off" class="layui-input" value="test">
+              </div>
+            </div>
+            <!-- 心跳周期 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">心跳周期</label>
+              <div class="layui-input-inline">
+                <input type="text" name="1400-heart-cycle" lay-verify="required|number|heartbeat" lay-verType="tips"
+                  lay-reqText="心跳周期不能为空!" autocomplete="off" class="layui-input" value="60">
+              </div>
+              <div class="layui-form-mid layui-word-aux">秒</div>
+            </div>
+            <!-- 心跳超时次数 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">超时次数</label>
+              <div class="layui-input-inline">
+                <input type="number" name="1400-timeout-count" lay-verify="required|timeout" lay-verType="tips"
+                  lay-reqText="超时次数不能为空!" autocomplete="off" class="layui-input" value="3">
+              </div>
+            </div>
+            <!-- 提交 -->
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="save-1400-config">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="layui/layui.js" charset="utf-8"></script>
+  <script src="js/renderer.js" charset="utf-8"></script>
+</body>
+
+</html>
